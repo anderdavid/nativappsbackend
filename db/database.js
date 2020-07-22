@@ -1,18 +1,18 @@
 const mysql = require('mysql')
 
-/* const params ={
+const params ={
     host:'localhost',
     user:'root',
-    password:root,
+    password:'root',
     database:'asignacion'
-} */
+}
 
-const params ={
+/* const params ={
     host:'sql10.freemysqlhosting.net',
     user:'sql10356362',
     password:'sGNCHQAkQA',
     database:'sql10356362'
-}
+} */
 
 const pool = mysql.createPool(params)
 module.exports=pool
