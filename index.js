@@ -1,12 +1,11 @@
 const express = require('express')
 const app = express()
-const pool = require('../db/database')  
-const { response } = require('express')
+const pool = require('./db/database')  
 
 const port = process.env.PORT||3002
 
 app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on port port!`))
+app.listen(port, () => console.log(`Example app listening on ${port} port!`))
 
 app.get('/estudiantes',(req,res)=>{
     let query ="SELECT *FROM estudiantes"
@@ -26,5 +25,6 @@ app.get('/estudiantes',(req,res)=>{
                 estudiantes:result
             }
         }
+        res.send(JSON.stringify(response))
     })
 })

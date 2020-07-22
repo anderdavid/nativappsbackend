@@ -14,6 +14,9 @@ const params ={
     database:'sql10356362'
 }
 
+const pool = mysql.createPool(params)
+module.exports=pool
+
 /* Server: sql10.freemysqlhosting.net
 		Name: sql10356362
 		Username: sql10356362
