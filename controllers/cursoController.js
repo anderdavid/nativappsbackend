@@ -1,0 +1,104 @@
+const pool = require('../db/database')
+
+exports.view =(req,res)=>{
+    let query ="SELECT *FROM cursos"
+    
+    pool.query(query,(err,result,fields)=>{
+        if(err) throw err
+        
+        if(result.length>0){
+            response ={
+                status:true,
+                cursos:result,
+            }
+        }else{
+            response ={
+                status:false,
+                msg:'no hay cursos',
+                cursos:result,
+            }
+        }
+            
+        res.send(JSON.stringify(response))
+    })
+}
+
+exports.viewId=(req,res)=>{
+    var id = req.params.id
+
+    let query ="SELECT *FROM cursos WHERE id ="+id
+
+    pool.query(query,(err,result,fields)=>{
+        if(err) throw err
+        
+        if(result.length>0){
+            response ={
+                status:true,
+                curso:result,
+            }
+        }else{
+            response ={
+                status:false,
+                msg:'curso no encontrado',
+                curso:result,
+            }
+        }
+            
+        res.send(JSON.stringify(response))
+    })
+}
+exports.create =(req,res)=>{
+    
+
+    let nombre_curso = req.body.nombre_curso
+    let horario= req.body.horario
+    let fecha_inicio = req.body.fecha_inicio
+    let fecha_fin = req.body.fecha_fin
+    let numero_estudiantes= req.body.numero_estudiantes
+
+    console.log('fecha: '+fecha_inicio)
+
+    let query ="INSERT INTO cursos VALUES(id,'"+nombre_curso+"','"+horario+"','"+fecha_inicio+"','"+fecha_fin+"',"+numero_estudiantes+")"
+    
+    console.log('query '+query)
+    pool.query(query,(err,result,fields)=>{
+        if(err) throw err
+            var response ={
+                status:true,
+                msg:'curso creado'
+            }
+            res.send(JSON.stringify(response))
+    })
+}
+exports.update =(req,res)=>{
+    var id = req.params.id
+    
+    let nombre_curso = req.body.nombre_curso
+    let horario= req.body.horario
+    let fecha_inicio = req.body.fecha_inicio
+    let fecha_fin = req.body.fecha_fin
+    let numero_estudiantes= req.body.numero_estudiantes
+
+    let query ="UPDATE cursos SET nombre_curso='"+nombre_curso+"',horario='"+horario+"',fecha_inicio='"+fecha_inicio+"',fecha_fin='"+fecha_fin+"',numero_estudiantes="+numero_estudiantes+" WHERE id ="+id
+    
+    pool.query(query,(err,result,fields)=>{
+        if(err) throw err
+            var response ={
+                status:true,
+                msg:'curso actualizado'
+            }
+            res.send(JSON.stringify(response))
+    })
+}
+exports.delete =(req,res)=>{
+    var id = req.params.id
+    let query ="DELETE FROM cursos WHERE id ="+id
+    pool.query(query,(err,result,fields)=>{
+        if(err) throw err
+         var response ={
+            status:true,
+            msg:'curso eliminado'
+        }
+        res.send(JSON.stringify(response))
+    })
+}
