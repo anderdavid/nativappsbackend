@@ -7,9 +7,17 @@ exports.view =(req,res)=>{
         if(err) throw err
         
         if(result.length>0){
+
+            let cursos = result
+
+            cursos.forEach(element => {
+                element.fecha_inicio=formatDate(element.fecha_inicio)
+                element.fecha_fin=formatDate(element.fecha_fin)
+            });
+
             response ={
                 status:true,
-                cursos:result,
+                cursos:cursos,
             }
         }else{
             response ={
@@ -32,9 +40,16 @@ exports.viewId=(req,res)=>{
         if(err) throw err
         
         if(result.length>0){
+            let cursos = result
+
+            cursos.forEach(element => {
+                element.fecha_inicio=formatDate(element.fecha_inicio)
+                element.fecha_fin=formatDate(element.fecha_fin)
+            });
+            
             response ={
                 status:true,
-                curso:result,
+                curso:cursos,
             }
         }else{
             response ={
@@ -101,4 +116,18 @@ exports.delete =(req,res)=>{
         }
         res.send(JSON.stringify(response))
     })
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }
