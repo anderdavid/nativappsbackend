@@ -8,6 +8,7 @@ app.use(express.json())
 
 const estudianteController =require('./controllers/estudianteController')
 const cursoController =require('./controllers/cursoController')
+const funcionesController =require('./controllers/funcionesController')
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on ${port} port!`))
@@ -26,5 +27,8 @@ app.get('/cursos/:id',cursoController.viewId)
 app.post('/cursos',cursoController.create)
 app.put('/cursos/:id',cursoController.update)
 app.delete('/cursos/:id',cursoController.delete)
+
+//funciones
+app.post('/asignacion',funcionesController.asignarCursos)
 
 
