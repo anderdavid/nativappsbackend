@@ -6,6 +6,7 @@ const port = process.env.PORT||3002
 app.use(cors())
 app.use(express.json())
 
+
 const estudianteController =require('./controllers/estudianteController')
 const cursoController =require('./controllers/cursoController')
 const funcionesController =require('./controllers/funcionesController')
