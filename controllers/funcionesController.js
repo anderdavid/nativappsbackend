@@ -73,7 +73,7 @@ exports.top3=(req,res)=>{
         }else{
             response ={
                 status:false,
-                msg:'no hay estudiantes inscritos',
+                msg:'No hay estudiantes inscritos',
                 top3:result,
             }
         }
