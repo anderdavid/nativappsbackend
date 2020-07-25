@@ -1,7 +1,7 @@
 const pool = require('../db/database')
 
 exports.view =(req,res)=>{
-    let query ="SELECT *FROM cursos"
+    let query ="SELECT c.*,count(ce.estudiante_id) as num_estudiantes FROM curso_estudiante ce RIGHT JOIN cursos c ON c.id =ce.curso_id GROUP BY (c.id)"
     
     pool.query(query,(err,result,fields)=>{
         if(err) throw err
@@ -69,11 +69,11 @@ exports.create =(req,res)=>{
     let horario= req.body.horario
     let fecha_inicio = req.body.fecha_inicio
     let fecha_fin = req.body.fecha_fin
-    let numero_estudiantes= req.body.numero_estudiantes
+    
 
     console.log('fecha: '+fecha_inicio)
 
-    let query ="INSERT INTO cursos VALUES(id,'"+nombre_curso+"','"+horario+"','"+fecha_inicio+"','"+fecha_fin+"',"+numero_estudiantes+")"
+    let query ="INSERT INTO cursos VALUES(id,'"+nombre_curso+"','"+horario+"','"+fecha_inicio+"','"+fecha_fin+"')"
     
     console.log('query '+query)
     pool.query(query,(err,result,fields)=>{
@@ -94,7 +94,7 @@ exports.update =(req,res)=>{
     let fecha_fin = req.body.fecha_fin
     let numero_estudiantes= req.body.numero_estudiantes
 
-    let query ="UPDATE cursos SET nombre_curso='"+nombre_curso+"',horario='"+horario+"',fecha_inicio='"+fecha_inicio+"',fecha_fin='"+fecha_fin+"',numero_estudiantes="+numero_estudiantes+" WHERE id ="+id
+    let query ="UPDATE cursos SET nombre_curso='"+nombre_curso+"',horario='"+horario+"',fecha_inicio='"+fecha_inicio+"',fecha_fin='"+fecha_fin+" WHERE id ="+id
     
     pool.query(query,(err,result,fields)=>{
         if(err) throw err
