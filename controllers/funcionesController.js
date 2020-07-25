@@ -1,5 +1,5 @@
 const pool = require('../db/database')
-const { json } = require('express')
+
 
 exports.asignarCursos =(req,res)=>{
     
@@ -59,16 +59,27 @@ exports.estudianteCurso=(req,res)=>{
     })
 }
 
-function formatDate(date) {
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+exports.top3=(req,res)=>{
+    let query ="SELECT c.nombre_curso,count(ce.curso_id) as inscritos FROM curso_estudiante ce INNER JOIN cursos c ON ce.curso_id =c.id WHERE createAt between DATE_SUB(NOW(),INTERVAL 3 MONTH) and  NOw() GROUP BY (ce.curso_id)  ORDER BY inscritos DESC LIMIT 3"
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+    pool.query(query,(err,result,fields)=>{
+        if(err) throw err
 
-    return [year, month, day].join('-');
+        if(result.length>0){
+            response={
+                status:true,
+                top3:result
+            }
+        }else{
+            response ={
+                status:false,
+                msg:'no hay estudiantes inscritos',
+                top3:result,
+            }
+        }
+        res.send(JSON.stringify(response))
+    })
+    
 }
+    
+

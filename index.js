@@ -31,5 +31,6 @@ app.delete('/cursos/:id',cursoController.delete)
 //funciones
 app.post('/asignacion',funcionesController.asignarCursos)
 app.get('/estudianteCurso/:id',funcionesController.estudianteCurso)
+app.get('/top3',funcionesController.top3)
 
 
